@@ -23,6 +23,9 @@ import io.cdap.wrangler.api.Directive;
 import io.cdap.wrangler.api.RecipeParser;
 import org.junit.Assert;
 import org.junit.Test;
+import io.cdap.cdap.common.lang.Exceptions;
+import io.cdap.wrangler.api.parser.TimeDuration;
+
 
 import java.util.List;
 
@@ -69,10 +72,18 @@ public class GrammarBasedParserTest {
     String[] recipe = new String[] {
       "// test"
     };
-
+//Parser 
     RecipeParser parser = TestingRig.parse(recipe);
     List<Directive> directives = parser.parse();
     Assert.assertEquals(0, directives.size());
+  }
+  @Test
+  public void testByteSizeSyntaxParsing() throws Exception {
+    String[] recipe = new String[] {
+        "#aggregate-stats :col1 10KB col2 10ms;"
+    };
+    CompileStatus status = TestingRig.compile(recipe);
+    Assert.assertTrue(status.isSuccess());
   }
 
 }

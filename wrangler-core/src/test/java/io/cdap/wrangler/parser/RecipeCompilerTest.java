@@ -38,10 +38,9 @@ public class RecipeCompilerTest {
       Compiler compiler = new RecipeCompiler();
       CompileStatus status = compiler.compile(
           "parse-as-csv :body ' ' true;\n"
-        + "set-column :abc, :edf;\n"
-        + "send-to-error exp:{ window < 10 } ;\n"
-        + "parse-as-simple-date :col 'yyyy-mm-dd' :col 'test' :col2,:col4,:col9 10 exp:{test < 10};\n"
-      );
+          + "set-column :abc, :edf;\n"
+          + "send-to-error exp:{ window < 10 } ;\n"
+          + "parse-as-simple-date :col 'yyyy-mm-dd' :col 'test' :col2,:col4,:col9 10 exp:{test < 10};\n");
 
       Assert.assertNotNull(status.getSymbols());
       Assert.assertEquals(4, status.getSymbols().size());
@@ -54,9 +53,9 @@ public class RecipeCompilerTest {
   public void testMacroSkippingDuringParsing() throws Exception {
     String[] recipe = new String[] {
       "parse-as-csv :body ',' true;",
-      "${macro1}",
-      "${macro${number}}",
-      "parse-as-csv :body '${delimiter}' true;"
+        "${macro1}",
+        "${macro${number}}",
+        "parse-as-csv :body '${delimiter}' true;"
     };
 
     CompileStatus status = TestingRig.compile(recipe);
@@ -86,8 +85,8 @@ public class RecipeCompilerTest {
   @Test
   public void testNestedMacros() throws Exception {
     String[] recipe = new String[] {
-      "#pragma load-directives test1,test2,test3,test4,test5;",
-      "${directives_${number}}"
+        "#pragma load-directives test1,test2,test3,test4,test5;",
+        "${directives_${number}}"
     };
     TestingRig.compileSuccess(recipe);
   }
@@ -95,8 +94,8 @@ public class RecipeCompilerTest {
   @Test
   public void testSemiColonMissing() throws Exception {
     String[] recipe = new String[] {
-      "#pragma load-directives test1,test2,test3,test4,test5",
-      "${directives_${number}}"
+        "#pragma load-directives test1,test2,test3,test4,test5",
+        "${directives_${number}}"
     };
     TestingRig.compileFailure(recipe);
   }
